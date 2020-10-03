@@ -28,7 +28,13 @@ su <regular user>
  kubeadm token create --print-join-command 
  #Connect to each node of the cluster and run the join command
  kubeadm join 10.10.10.10:6443 --token <blah>     --discovery-token-ca-cert-hash <blah>
+ #While on the master and nodes fix kublet to use the local ip.
+ edit the file /etc/sysconfig/kubelet
+ Add:
+ KUBELET_EXTRA_ARGS=--node-ip=<the.node.ip> 
+ #Reboot the Vm's
  ```
+ 
  
 [Vagrantfile]: <https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8>
 [playbook]: <https://github.com/tixsalvador/ansible_vagrant>
