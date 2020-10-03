@@ -34,8 +34,37 @@ su <regular user>
  KUBELET_EXTRA_ARGS=--node-ip=<the.node.ip> 
  #Reboot the Vm's
  ```
+ Kubernetes cluster should be up by now
+ ```sh
+ #Check nodes
+ kubectl get nodes -owide
  
- 
+ NAME        STATUS   ROLES    INTERNAL-IP   
+master-k8   Ready    master   10.10.10.10   
+node-k81    Ready    <none>   10.10.10.11   
+node-k82    Ready    <none>   10.10.10.12   
+node-k83    Ready    <none>   10.10.10.13  
+
+#Check pods
+kubectl get pods -owide
+
+NAMESPACE     NAME                                  STATUS      IP            NODE        
+kube-system   coredns-f9fd979d6-gx4qk               Running     10.244.0.5    master-k8   
+kube-system   coredns-f9fd979d6-wbtll               Running     10.244.0.4    master-k8   
+kube-system   etcd-master-k8                        Running     10.10.10.10   master-k8   
+kube-system   kube-apiserver-master-k8              Running     10.10.10.10   master-k8   
+kube-system   kube-controller-manager-master-k8     Running     10.10.10.10   master-k8   
+kube-system   kube-flannel-ds-9jc4n                 Running     10.10.10.13   node-k83    
+kube-system   kube-flannel-ds-bmhhr                 Running     10.10.10.10   master-k8   
+kube-system   kube-flannel-ds-q8gz6                 Running     10.10.10.12   node-k82    
+kube-system   kube-flannel-ds-qkspf                 Running     10.10.10.11   node-k81    
+kube-system   kube-proxy-5vnkf                      Running     10.10.10.12   node-k82    
+kube-system   kube-proxy-j7z5x                      Running     10.10.10.13   node-k83    
+kube-system   kube-proxy-t8dbp                      Running     10.10.10.10   master-k8   
+kube-system   kube-proxy-zfbgg                      Running     10.10.10.11   node-k81    
+kube-system   kube-scheduler-master-k8              Running     10.10.10.10   master-k8 
+```
+
 [Vagrantfile]: <https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8>
 [playbook]: <https://github.com/tixsalvador/ansible_vagrant>
 [flannel yaml]: <https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml>
