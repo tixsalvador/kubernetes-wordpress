@@ -1,11 +1,11 @@
 # Wordpress on kubernetes cluster 
 
 Setting up wordpress on k8s  running on vagrant centos/7 vm's. 
-#### Requirements
+### Requirements
  - Create vm's using [Vagrantfile]
  - Run ansible [playbook] to prepare the vm's.
 
-##### Steps to install kubernetes cluster using kubeadm
+### Steps to install kubernetes cluster using kubeadm
 ```sh
 sudo to root
 kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address 10.10.10.10
