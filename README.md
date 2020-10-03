@@ -15,7 +15,8 @@ kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address 10.1
 
 ```sh
 su <regular user>
- mkdir -p $HOME/.kube
+mkdir -p $HOME/.kube
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
  Deploy pod network to the cluster. I edit the network settings on my [flannel yaml]  to use the 2nd nic due to the 1st nic is NATed iface of vagrant. 
  ```sh
