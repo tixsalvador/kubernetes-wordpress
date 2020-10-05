@@ -78,7 +78,7 @@ kubectl -n kubernetes-dashboard  edit service kubernetes-dashboard
 # Change:
 type: NodePort   
 ```
-Get the token
+Get token
 ```sh
 kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-system -o name | grep namespace) | grep token:
 ```
