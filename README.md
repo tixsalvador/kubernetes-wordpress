@@ -67,6 +67,22 @@ kube-system   kube-proxy-zfbgg                      Running     10.10.10.11   no
 kube-system   kube-scheduler-master-k8              Running     10.10.10.10   master-k8 
 ```
 
+##### Deploy Dashboard UI on external interface.
+```sh
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+```
+Make the dashboard available externally. (This is only for my testing environment)
+Edit kubernetes-dashboard service
+```sh
+kubectl -n kubernetes-dashboard  edit service kubernetes-dashboard
+# Change:
+type: NodePort   
+```
+Get the token
+```sh
+kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-system -o name | grep namespace) | grep token:
+```
+
 [Vagrantfile]: <https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8>
 [playbook]: <https://github.com/tixsalvador/ansible_vagrant>
 [flannel yaml]: <https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml>
