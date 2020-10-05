@@ -67,7 +67,7 @@ kube-system   kube-proxy-zfbgg                      Running     10.10.10.11   no
 kube-system   kube-scheduler-master-k8              Running     10.10.10.10   master-k8 
 ```
 
-##### Deploy Dashboard UI on external interface.
+#### Deploy Dashboard UI on external interface.
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
 ```
@@ -82,7 +82,7 @@ Get token
 ```sh
 kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-system -o name | grep namespace) | grep token:
 ```
-Connect to dashboard
+Connect to dashboard UI
 ```sh
 kubectl proxy
 ```
