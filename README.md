@@ -103,6 +103,10 @@ data:
   db_root_password: $db_password
   db_wordpress_password: $wordpress_password
 ```
+```sh
+kubectl create -f wp_secret.yml
+```
+
 
 [Vagrantfile]: <https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8>
 [playbook]: <https://github.com/tixsalvador/ansible_vagrant>
