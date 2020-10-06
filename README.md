@@ -85,6 +85,22 @@ kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-syst
 Connect to dashboard UI
 external-ip:service port
 
+#### Create secret file
+[wp_secret.yml]
+```sh
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wordpress-secret
+  labels:
+    app: wordpress
+type: Opaque
+data:
+  db_root_password: password-goes-here
+  db_wordpress_password: password-goes-here
+```
+
 [Vagrantfile]: <https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8>
 [playbook]: <https://github.com/tixsalvador/ansible_vagrant>
 [flannel yaml]: <https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml>
+[wp_secret.yml]: <https://github.com/tixsalvador/kubernetes-wordpress/edit/main/Reaadme.md>
