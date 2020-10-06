@@ -86,6 +86,10 @@ Connect to dashboard UI
 external-ip:service port
 
 #### Create secret file
+```sh
+db_password=echo -n “pass” | base64
+wordpress_password=echo -n “pass” | base64
+```
 [wp_secret.yml]
 ```sh
 apiVersion: v1
@@ -96,8 +100,8 @@ metadata:
     app: wordpress
 type: Opaque
 data:
-  db_root_password: password-goes-here
-  db_wordpress_password: password-goes-here
+  db_root_password: $db_password
+  db_wordpress_password: $wordpress_password
 ```
 
 [Vagrantfile]: <https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8>
