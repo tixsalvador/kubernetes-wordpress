@@ -103,4 +103,4 @@ data:
 [Vagrantfile]: <https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8>
 [playbook]: <https://github.com/tixsalvador/ansible_vagrant>
 [flannel yaml]: <https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml>
-[wp_secret.yml]: <https://github.com/tixsalvador/kubernetes-wordpress/edit/main/Reaadme.md>
+[wp_secret.yml]: <https://github.com/tixsalvador/kubernetes-wordpress/blob/main/wp_secret.yml>
