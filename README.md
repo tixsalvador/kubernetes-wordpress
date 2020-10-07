@@ -120,7 +120,7 @@ spec:
     storage: 2Gi
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Delete
+  persistentVolumeReclaimPolicy: Recycle
   nfs:
     path: /mnt/nfs/data/0
     server: 10.10.10.10
