@@ -9,7 +9,7 @@ spec:
     storage: 2Gi
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Delete
+  persistentVolumeReclaimPolicy: Recycle
   nfs:
     path: /mnt/nfs/data/0
     server: 10.10.10.10
@@ -38,7 +38,7 @@ spec:
     storage: 2Gi
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Delete
+  persistentVolumeReclaimPolicy: Recycle
   nfs:
     path: /mnt/nfs/data/1
     server: 10.10.10.10
@@ -67,7 +67,7 @@ spec:
     storage: 2Gi
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Delete
+  persistentVolumeReclaimPolicy: Recycle
   nfs:
     path: /mnt/nfs/data/2
     server: 10.10.10.10
@@ -84,3 +84,4 @@ spec:
   resources:
     requests:
       storage: 2Gi
+
