@@ -6,7 +6,7 @@ metadata:
     app: wordpress
 spec:
   capacity:
-    storage: 2Gi
+    storage: 1Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Recycle
@@ -25,7 +25,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -35,7 +35,7 @@ metadata:
     app: wordpress
 spec:
   capacity:
-    storage: 2Gi
+    storage: 1Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Recycle
@@ -54,7 +54,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -64,7 +64,7 @@ metadata:
     app: wordpress
 spec:
   capacity:
-    storage: 2Gi
+    storage: 1Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Recycle
@@ -83,5 +83,4 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
-
+      storage: 1Gi
