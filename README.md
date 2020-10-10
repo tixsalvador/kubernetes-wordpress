@@ -167,7 +167,7 @@ $ kubectl create -f https://github.com/tixsalvador/kubernetes-wordpress/blob/mai
 
 #### Deploy etcd
 
-Assign label to nodes
+Assign labels to nodes
 
 ```sh
 $  kubectl label nodes node-k81 name=node-k81
