@@ -134,23 +134,23 @@ $ kubectl create -f wp_secret.yml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: wp-mysql-pv0
+  name: etcd-pv0
   labels:
-    app: wordpress
+    pv-name: etcd-pv0
 spec:
   capacity:
-    storage: 2Gi
+    storage: 1Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Recycle
   nfs:
-    path: /mnt/nfs/data/0
+    path: /mnt/nfs/data/etcd0
     server: 10.10.10.10
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wp-mysql-pvc0
+  name: data-etcd-0
   labels:
     app: wordpress
 spec:
@@ -158,7 +158,10 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
+      storage: 1Gi
+  selector:
+    matchLabels:
+      pv-name: etcd-pv0
 ```
 
 ```sh
