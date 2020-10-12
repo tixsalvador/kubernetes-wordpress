@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: etcd-pv0
   labels:
-    app: wordpress
+    pv-name: etcd-pv0
 spec:
   capacity:
     storage: 1Gi
@@ -26,13 +26,16 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  selector:
+    matchLabels:
+      pv-name: etcd-pv0
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: etcd-pv1
   labels:
-    app: wordpress
+    pv-name: etcd-pv1
 spec:
   capacity:
     storage: 1Gi
@@ -55,13 +58,16 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  selector:
+    matchLabels:
+      pv-name: etcd-pv1
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: etcd-pv2
   labels:
-    app: wordpress
+    pv-name: etcd-pv2
 spec:
   capacity:
     storage: 1Gi
@@ -84,3 +90,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  selector:
+    matchLabels:
+      pv-name: etcd-pv2

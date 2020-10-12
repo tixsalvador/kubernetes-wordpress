@@ -1,206 +1,71 @@
 apiVersion: v1
-kind: Pod
-metadata:
-  name: etcd0
-  labels:
-    app: wordpress
-    etcdnode: etcd0
-spec:
-  containers:
-  - command:
-    - /usr/local/bin/etcd
-    - --name
-    - etcd0
-    - --initial-advertise-peer-urls
-    - http://etcd0:2380
-    - --listen-peer-urls
-    - http://0.0.0.0:2380
-    - --listen-client-urls
-    - http://0.0.0.0:2379
-    - --advertise-client-urls
-    - http://etcd0:2379
-    - --initial-cluster
-    - etcd0=http://etcd0:2380,etcd1=http://etcd1:2380,etcd2=http://etcd2:2380
-    - --initial-cluster-state
-    - new
-    image: quay.io/coreos/etcd:latest
-    name: etcd0
-    ports:
-    - containerPort: 2379
-      name: client
-      protocol: TCP
-    - containerPort: 2380
-      name: server
-      protocol: TCP
-    - containerPort: 4001
-      protocol: TCP
-    - containerPort: 7001
-      protocol: TCP
-  restartPolicy: Never
-  nodeSelector:
-    name: node-k81
----
-apiVersion: v1
 kind: Service
 metadata:
+  name: etcd
   labels:
-    etcd_node: etcd0
-  name: etcd0
+    app: etcd
 spec:
+  clusterIP: None
   ports:
-  - name: client
-    port: 2379
+  - port: 2379
     protocol: TCP
     targetPort: 2379
-  - name: server
-    port: 2380
+    name: client
+  - port: 2380
     protocol: TCP
     targetPort: 2380
-  - name: etcd-4001
-    port: 4001
-    protocol: TCP
-    targetPort: 4001
-  - name: etcd-7001
-    port: 7001
-    protocol: TCP
-    targetPort: 7001    
+    name: server
+  
   selector:
-    etcdnode: etcd0
+    app: etcd
 ---
-apiVersion: v1
-kind: Pod
-metadata:
-  name: etcd1
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: 
+  name: etcd
   labels:
-    app: wordpress
-    etcdnode: etcd1
+   app: etcd
 spec:
-  containers:
-  - command:
-    - /usr/local/bin/etcd
-    - --name
-    - etcd1
-    - --initial-advertise-peer-urls
-    - http://etcd1:2380
-    - --listen-peer-urls
-    - http://0.0.0.0:2380
-    - --listen-client-urls
-    - http://0.0.0.0:2379
-    - --advertise-client-urls
-    - http://etcd1:2379
-    - --initial-cluster
-    - etcd0=http://etcd0:2380,etcd1=http://etcd1:2380,etcd2=http://etcd2:2380
-    - --initial-cluster-state
-    - new
-    image: quay.io/coreos/etcd:latest
-    name: etcd1
-    ports:
-    - containerPort: 2379
-      name: client
-      protocol: TCP
-    - containerPort: 2380
-      name: server
-      protocol: TCP
-    - containerPort: 4001
-      protocol: TCP
-    - containerPort: 7001
-      protocol: TCP
-  restartPolicy: Never
-  nodeSelector:
-    name: node-k82
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    etcd_node: etcd1
-  name: etcd1
-spec:
-  ports:
-  - name: client
-    port: 2379
-    protocol: TCP
-    targetPort: 2379
-  - name: server
-    port: 2380
-    protocol: TCP
-    targetPort: 2380
-  - name: etcd-4001
-    port: 4001
-    protocol: TCP
-    targetPort: 4001
-  - name: etcd-7001
-    port: 7001
-    protocol: TCP
-    targetPort: 7001    
   selector:
-    etcdnode: etcd1
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: etcd2
-  labels:
-    app: wordpress
-    etcdnode: etcd2
-spec:
-  containers:
-  - command:
-    - /usr/local/bin/etcd
-    - --name
-    - etcd2
-    - --initial-advertise-peer-urls
-    - http://etcd2:2380
-    - --listen-peer-urls
-    - http://0.0.0.0:2380
-    - --listen-client-urls
-    - http://0.0.0.0:2379
-    - --advertise-client-urls
-    - http://etcd2:2379
-    - --initial-cluster
-    - etcd0=http://etcd0:2380,etcd1=http://etcd1:2380,etcd2=http://etcd2:2380
-    - --initial-cluster-state
-    - new
-    image: quay.io/coreos/etcd:latest
-    name: etcd2
-    ports:
-    - containerPort: 2379
-      name: client
-      protocol: TCP
-    - containerPort: 2380
-      name: server
-      protocol: TCP
-    - containerPort: 4001
-      protocol: TCP
-    - containerPort: 7001
-      protocol: TCP
-  restartPolicy: Never
-  nodeSelector:
-    name: node-k83
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    etcd_node: etcd2
-  name: etcd2
-spec:
-  ports:
-  - name: client
-    port: 2379
-    protocol: TCP
-    targetPort: 2379
-  - name: server
-    port: 2380
-    protocol: TCP
-    targetPort: 2380
-  - name: etcd-4001
-    port: 4001
-    protocol: TCP
-    targetPort: 4001
-  - name: etcd-7001
-    port: 7001
-    protocol: TCP
-    targetPort: 7001    
-  selector:
-    etcdnode: etcd2
+    matchLabels:
+      app: etcd
+  serviceName: etcd
+  replicas: 3
+  template:
+    metadata:
+      labels: 
+        app: etcd
+    spec: 
+      containers:
+      - name: etcd
+        image: quay.io/coreos/etcd:latest
+        ports: 
+        - containerPort: 2379
+          name: client
+        - containerPort: 2380
+          name: peer
+        volumeMounts:
+        - name: data
+          mountPath: /var/run/etcd
+        command:
+          - /bin/sh
+          - -c
+          - |
+            PEERS="etcd-0=http://etcd-0.etcd:2380,etcd-1=http://etcd-1.etcd:2380,etcd-2=http://etcd-2.etcd:2380"
+            exec etcd --name ${HOSTNAME} \
+              --listen-peer-urls http://0.0.0.0:2380 \
+              --listen-client-urls http://0.0.0.0:2379 \
+              --advertise-client-urls http://${HOSTNAME}:2379 \
+              --initial-advertise-peer-urls http://${HOSTNAME}:2380 \
+              --initial-cluster ${PEERS} \
+              --initial-cluster-state new \
+              --data-dir /var/run/etcd/default.etcd
+  volumeClaimTemplates:
+  - metadata: 
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
