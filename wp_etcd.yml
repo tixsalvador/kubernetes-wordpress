@@ -13,6 +13,8 @@ spec:
     - etcd0
     - --initial-advertise-peer-urls
     - http://etcd0:2380
+    - --listen-peer-urls
+    - http://0.0.0.0:2380
     - --listen-client-urls
     - http://0.0.0.0:2379
     - --advertise-client-urls
@@ -39,6 +41,33 @@ spec:
     name: node-k81
 ---
 apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    etcd_node: etcd0
+  name: etcd0
+spec:
+  ports:
+  - name: client
+    port: 2379
+    protocol: TCP
+    targetPort: 2379
+  - name: server
+    port: 2380
+    protocol: TCP
+    targetPort: 2380
+  - name: etcd-4001
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: etcd-7001
+    port: 7001
+    protocol: TCP
+    targetPort: 7001    
+  selector:
+    etcdnode: etcd0
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: etcd1
@@ -53,6 +82,8 @@ spec:
     - etcd1
     - --initial-advertise-peer-urls
     - http://etcd1:2380
+    - --listen-peer-urls
+    - http://0.0.0.0:2380
     - --listen-client-urls
     - http://0.0.0.0:2379
     - --advertise-client-urls
@@ -79,6 +110,33 @@ spec:
     name: node-k82
 ---
 apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    etcd_node: etcd1
+  name: etcd1
+spec:
+  ports:
+  - name: client
+    port: 2379
+    protocol: TCP
+    targetPort: 2379
+  - name: server
+    port: 2380
+    protocol: TCP
+    targetPort: 2380
+  - name: etcd-4001
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: etcd-7001
+    port: 7001
+    protocol: TCP
+    targetPort: 7001    
+  selector:
+    etcdnode: etcd1
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: etcd2
@@ -93,6 +151,8 @@ spec:
     - etcd2
     - --initial-advertise-peer-urls
     - http://etcd2:2380
+    - --listen-peer-urls
+    - http://0.0.0.0:2380
     - --listen-client-urls
     - http://0.0.0.0:2379
     - --advertise-client-urls
@@ -117,3 +177,30 @@ spec:
   restartPolicy: Never
   nodeSelector:
     name: node-k83
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    etcd_node: etcd2
+  name: etcd2
+spec:
+  ports:
+  - name: client
+    port: 2379
+    protocol: TCP
+    targetPort: 2379
+  - name: server
+    port: 2380
+    protocol: TCP
+    targetPort: 2380
+  - name: etcd-4001
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: etcd-7001
+    port: 7001
+    protocol: TCP
+    targetPort: 7001    
+  selector:
+    etcdnode: etcd2
