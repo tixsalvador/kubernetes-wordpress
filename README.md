@@ -184,6 +184,45 @@ Deploy etcd pods and services [wp_etcd.yml]
 $ kubectl create -f https://github.com/tixsalvador/kubernetes-wordpress/blob/main/wp_etcd.yml
 ```
 
+Add service port temporarily only to check if etcd is working.
+
+```sh
+$ vim wp_etcd.yml
+Add:
+apiVersion: v1
+kind: Service
+metadata:
+   name: etcd-testport
+   labels:
+     app: etcd-testport
+spec:
+  type: NodePort
+  ports:
+  - port: 2379
+    name: etcd-testport
+    targetPort: 2379
+    protocol: TCP
+  selector:
+    app: etcd
+```
+
+Check etcd if it's working
+
+```sh
+$ kubectl get pods -o wide | awk '{print $1,$3,$7}'
+NAME STATUS NODE
+etcd-0 Running node-k81
+etcd-1 Running node-k83
+etcd-2 Running node-k82
+```
+
+```sh
+ $ curl -L -X PUT http://10.10.10.10:32488/v2/keys/message -d value="tixfirstetcd"
+{"action":"set","node":{"key":"/message","value":"tixfirstetcd","modifiedIndex":29,"createdIndex":29},"prevNode":{"key":"/message","value":"tixfirstetcd","modifiedIndex":28,"createdIndex":28}}
+$ curl -L http://10.10.10.10:32488/v2/keys/message
+{"action":"get","node":{"key":"/message","value":"tixfirstetcd","modifiedIndex":29,"createdIndex":29}}
+```
+
 [vagrantfile]: https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8
 [playbook]: https://github.com/tixsalvador/ansible_vagrant
 [flannel yaml]: https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml

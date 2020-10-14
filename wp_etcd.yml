@@ -15,7 +15,22 @@ spec:
     protocol: TCP
     targetPort: 2380
     name: server
-  
+  selector:
+    app: etcd
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: etcd-testport
+   labels:
+     app: etcd-testport
+spec:
+  type: NodePort
+  ports:
+  - port: 2379
+    name: etcd-testport
+    targetPort: 2379
+    protocol: TCP
   selector:
     app: etcd
 ---
@@ -68,4 +83,5 @@ spec:
       resources:
         requests:
           storage: 1Gi
+
 
