@@ -34,6 +34,19 @@ spec:
   selector:
     app: etcd
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: etcd-percona
+spec:
+  ports:
+  - port: 2379
+    name: etcd-mysql-2379
+    targetPort: 2379
+    protocol: TCP
+  selector:
+    app: etcd 
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata: 

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+   name: mysql
+   labels:
+     app: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: perconalab/percona-xtradb-cluster:latest
+        ports: 
+        - containerPort: 3306
+          name: mysql
+        env:
+          - name:  MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wordpress-secret
+                key: db_root_password
+          - name: XTRABACKUP_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wordpress-secret
+                key: db_backup_password
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wordpress-secret
+                key: db_wordpress_password
+          - name:  DISCOVERY_SERVICE
+            value: etcd-percona:2379
+          - name: CLUSTER_NAME
+            value: percona
+          - name: MYSQL_DATABASE
+            value: wordpress
+          
