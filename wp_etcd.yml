@@ -93,7 +93,7 @@ spec:
             exec etcd --name ${HOSTNAME} \
               --listen-peer-urls http://0.0.0.0:2380 \
               --listen-client-urls http://0.0.0.0:2379 \
-              --advertise-client-urls http://${HOSTNAME}:2379 \
+              --advertise-client-urls http://${HOSTNAME}.etcd:2379 \
               --initial-advertise-peer-urls http://${HOSTNAME}:2380 \
               --initial-cluster ${PEERS} \
               --initial-cluster-state new \
@@ -106,5 +106,6 @@ spec:
       resources:
         requests:
           storage: 1Gi
+
 
 
