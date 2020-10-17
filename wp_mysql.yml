@@ -15,12 +15,25 @@ spec:
       labels:
         app: mysql
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - mysql
+            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: mysql
         image: perconalab/percona-xtradb-cluster:latest
         ports: 
         - containerPort: 3306
           name: mysql
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
         env:
           - name:  MYSQL_ROOT_PASSWORD
             valueFrom:
@@ -41,6 +54,16 @@ spec:
             value: etcd-percona:2379
           - name: CLUSTER_NAME
             value: percona
+          - name: MYSQL_USER 
+            value: wordpress
           - name: MYSQL_DATABASE
             value: wordpress
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests: 
+          storage: 1Gi
           

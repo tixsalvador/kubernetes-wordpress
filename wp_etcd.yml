@@ -64,6 +64,16 @@ spec:
       labels: 
         app: etcd
     spec: 
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - etcd
+            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: etcd
         image: quay.io/coreos/etcd:latest

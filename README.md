@@ -178,6 +178,23 @@ $  kubectl label nodes node-k82 name=node-k82
 $  kubectl label nodes node-k83 name=node-k83
 ```
 
+Add pod anti affinity rule on etcd yaml so scheduler does not co-locate replicas on a single node.
+
+```sh
+spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - etcd
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+```
+
 Deploy etcd pods and services [wp_etcd.yml]
 
 ```sh
