@@ -248,6 +248,125 @@ Deploy 3 mysql replicas [wp_mysql.yml]
 $ kubectl create -f https://raw.githubusercontent.com/tixsalvador/kubernetes-wordpress/main/wp_mysql.yml
 ```
 
+Check percona cluster if sync. (Values should be the same below)
+
+```sh
+mysql> show global status  where Variable_name='wsrep_cluster_status' or Variable_name like 'wsrep_local_state';
++----------------------+---------+
+| Variable_name        | Value   |
++----------------------+---------+
+| wsrep_local_state    | 4       |
+| wsrep_cluster_status | Primary |
++----------------------+---------+
+
+mysql> show variables like 'read_only';;
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| read_only     | OFF   |
++---------------+-------+
+```
+
+Check etcd if all host of the percona cluster have been added. Enable etcd-testport to connect to the Nodeport of etcd
+
+```sh
+$ curl http://<ETCD IP:NODEPORT>/v2/keys/pxc-cluster/<CLUSTER_NAME>/?recursive=true | jq
+{
+  "action": "get",
+  "node": {
+    "key": "/pxc-cluster/percona",
+    "dir": true,
+    "nodes": [
+      {
+        "key": "/pxc-cluster/percona/10.244.2.83",
+        "dir": true,
+        "expiration": "2020-10-18T20:58:29.432858508Z",
+        "ttl": 26,
+        "nodes": [
+          {
+            "key": "/pxc-cluster/percona/10.244.2.83/ipaddr",
+            "value": "10.244.2.83",
+            "expiration": "2020-10-18T20:58:29.362794483Z",
+            "ttl": 26,
+            "modifiedIndex": 45297,
+            "createdIndex": 45297
+          },
+          {
+            "key": "/pxc-cluster/percona/10.244.2.83/hostname",
+            "value": "mysql-2",
+            "expiration": "2020-10-18T20:58:29.391964085Z",
+            "ttl": 26,
+            "modifiedIndex": 45298,
+            "createdIndex": 45298
+          }
+        ],
+        "modifiedIndex": 40653,
+        "createdIndex": 40653
+      },
+      {
+        "key": "/pxc-cluster/percona/10.244.3.63",
+        "dir": true,
+        "expiration": "2020-10-18T20:58:33.02749108Z",
+        "ttl": 30,
+        "nodes": [
+          {
+            "key": "/pxc-cluster/percona/10.244.3.63/ipaddr",
+            "value": "10.244.3.63",
+            "expiration": "2020-10-18T20:58:32.963542336Z",
+            "ttl": 30,
+            "modifiedIndex": 45303,
+            "createdIndex": 45303
+          },
+          {
+            "key": "/pxc-cluster/percona/10.244.3.63/hostname",
+            "value": "mysql-1",
+            "expiration": "2020-10-18T20:58:32.999217831Z",
+            "ttl": 30,
+            "modifiedIndex": 45304,
+            "createdIndex": 45304
+          }
+        ],
+        ],
+        "modifiedIndex": 40683,
+        ],
+        "modifiedIndex": 40683,
+        ],
+        "modifiedIndex": 40683,
+        "createdIndex": 40683
+      },
+      {
+        "key": "/pxc-cluster/percona/10.244.1.86",
+        "dir": true,
+        "expiration": "2020-10-18T20:58:31.643178982Z",
+        "ttl": 28,
+        "nodes": [
+          {
+            "key": "/pxc-cluster/percona/10.244.1.86/ipaddr",
+            "value": "10.244.1.86",
+            "expiration": "2020-10-18T20:58:31.575521209Z",
+            "ttl": 28,
+            "modifiedIndex": 45300,
+            "createdIndex": 45300
+          },
+          {
+            "key": "/pxc-cluster/percona/10.244.1.86/hostname",
+            "value": "mysql-0",
+            "expiration": "2020-10-18T20:58:31.60966732Z",
+            "ttl": 28,
+            "modifiedIndex": 45301,
+            "createdIndex": 45301
+          }
+        ],
+        "modifiedIndex": 40635,
+        "createdIndex": 40635
+      }
+    ],
+    "modifiedIndex": 37,
+    "createdIndex": 37
+  }
+}
+```
+
 [vagrantfile]: https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8
 [playbook]: https://github.com/tixsalvador/ansible_vagrant
 [flannel yaml]: https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml
