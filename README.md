@@ -259,7 +259,7 @@ mysql> show global status  where Variable_name='wsrep_cluster_status' or Variabl
 | wsrep_cluster_status | Primary |
 +----------------------+---------+
 
-mysql> show variables like 'read_only';;
+mysql> show variables like 'read_only';
 +---------------+-------+
 | Variable_name | Value |
 +---------------+-------+
@@ -267,7 +267,7 @@ mysql> show variables like 'read_only';;
 +---------------+-------+
 ```
 
-Check etcd if all host of the percona cluster have been added. Enable etcd-testport to connect to the Nodeport of etcd
+Check etcd if the nodes are added in the service directory. Enable etcd-testport to connect to etcd nodeport.
 
 ```sh
 $ curl http://<ETCD IP:NODEPORT>/v2/keys/pxc-cluster/<CLUSTER_NAME>/?recursive=true | jq
