@@ -367,6 +367,7 @@ $ curl http://<ETCD IP:NODEPORT>/v2/keys/pxc-cluster/<CLUSTER_NAME>/?recursive=t
 }
 ```
 
+
 [vagrantfile]: https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8
 [playbook]: https://github.com/tixsalvador/ansible_vagrant
 [flannel yaml]: https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml
