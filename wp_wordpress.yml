@@ -1,1 +1,8 @@
-
+apiVersion: apps/v1
+kind: Replicaset
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+    tier: frontend
+spec:
