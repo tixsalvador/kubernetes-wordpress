@@ -242,7 +242,7 @@ $ curl -L http://10.10.10.10:32488/v2/keys/message
 
 #### Mysql cluster
 
-Deploy [wp_mysql.yml]
+Deploy 3 mysql replicas [wp_mysql.yml]
 
 ```sh
 $ kubectl create -f https://raw.githubusercontent.com/tixsalvador/kubernetes-wordpress/main/wp_mysql.yml
