@@ -40,3 +40,4 @@ spec:
          - name: content
            persistentVolumeClaim:
              claimName: content-wordpress
+             
