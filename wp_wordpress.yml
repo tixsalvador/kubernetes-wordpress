@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Replicaset
+kind: ReplicaSet
 metadata:
   name: wordpress
   labels:
@@ -36,7 +36,7 @@ spec:
                 key: db_wordpress_password
           - name: WORDPRESS_DB_HOST
             value: mysql
-        volumes:
-          - name: content
-            persistentVolumeClaim:
-              claimName: content-wordpress
+      volumes:
+         - name: content
+           persistentVolumeClaim:
+             claimName: content-wordpress
