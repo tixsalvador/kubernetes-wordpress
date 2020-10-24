@@ -165,7 +165,7 @@ spec:
 ```
 
 ```sh
-$ kubectl create -f https://github.com/tixsalvador/kubernetes-wordpress/blob/main/wp_volumes.yml
+$ kubectl create -f https://raw.githubusercontent.com/tixsalvador/kubernetes-wordpress/main/wp_volumes.yml
 ```
 
 #### Deploy etcd
@@ -198,7 +198,7 @@ spec:
 Deploy etcd pods and services [wp_etcd.yml]
 
 ```sh
-$ kubectl create -f https://github.com/tixsalvador/kubernetes-wordpress/blob/main/wp_etcd.yml
+$ kubectl create -f https://raw.githubusercontent.com/tixsalvador/kubernetes-wordpress/main/wp_etcd.yml
 ```
 
 Add service port temporarily only to check if etcd is working.
@@ -367,6 +367,13 @@ $ curl http://<ETCD IP:NODEPORT>/v2/keys/pxc-cluster/<CLUSTER_NAME>/?recursive=t
 }
 ```
 
+#### Wordpress
+
+Deploy wordpress in replicaset [wp_wordpress.yml]
+
+```sh
+$ kubectl create -f https://raw.githubusercontent.com/tixsalvador/kubernetes-wordpress/main/wp_wordpress.yml
+```
 
 [vagrantfile]: https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8
 [playbook]: https://github.com/tixsalvador/ansible_vagrant
@@ -375,3 +382,4 @@ $ curl http://<ETCD IP:NODEPORT>/v2/keys/pxc-cluster/<CLUSTER_NAME>/?recursive=t
 [wp_volumes.yml]: https://github.com/tixsalvador/kubernetes-wordpress/blob/main/wp_volumes.yml
 [wp_etcd.yml]: https://github.com/tixsalvador/kubernetes-wordpress/blob/main/wp_etcd.yml
 [wp_mysql.yml]: https://raw.githubusercontent.com/tixsalvador/kubernetes-wordpress/main/wp_mysql.yml
+[wp_wordpress.yml]: https://github.com/tixsalvador/kubernetes-wordpress/blob/main/wp_wordpress.yml
