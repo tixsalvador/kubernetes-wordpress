@@ -1,3 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+spec:
+  type: NodePort
+  ports: 
+    - port: 80 
+      protocol: TCP
+      targetPort: 80
+      name: server
+  selector:
+    app: wordpress   
+---
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
@@ -6,7 +20,7 @@ metadata:
     app: wordpress
     tier: frontend
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       tier: frontend
