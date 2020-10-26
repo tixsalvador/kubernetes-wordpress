@@ -376,6 +376,7 @@ $ kubectl create -f https://raw.githubusercontent.com/tixsalvador/kubernetes-wor
 ```
 
 Add HPA (Horizontal Pod Autoscaler) for wordpress
+
 Requirements:
 
 - Metrics server [metrics-server]
