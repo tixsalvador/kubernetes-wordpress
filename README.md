@@ -375,6 +375,12 @@ Deploy wordpress in replicaset [wp_wordpress.yml]
 $ kubectl create -f https://raw.githubusercontent.com/tixsalvador/kubernetes-wordpress/main/wp_wordpress.yml
 ```
 
+Add HPA (Horizontal Pod Autoscaler) for wordpress
+
+- Requirements:
+- Metrics server [metrics-server]
+- HTTP/HTTPS stress tester [siege] - testing utility
+
 [vagrantfile]: https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8
 [playbook]: https://github.com/tixsalvador/ansible_vagrant
 [flannel yaml]: https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml
@@ -383,3 +389,5 @@ $ kubectl create -f https://raw.githubusercontent.com/tixsalvador/kubernetes-wor
 [wp_etcd.yml]: https://github.com/tixsalvador/kubernetes-wordpress/blob/main/wp_etcd.yml
 [wp_mysql.yml]: https://raw.githubusercontent.com/tixsalvador/kubernetes-wordpress/main/wp_mysql.yml
 [wp_wordpress.yml]: https://github.com/tixsalvador/kubernetes-wordpress/blob/main/wp_wordpress.yml
+[metrics-server]: https://github.com/kubernetes-sigs/metrics-server
+[siege]: https://www.joedog.org/siege-home/
