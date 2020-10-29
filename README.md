@@ -382,6 +382,53 @@ Requirements:
 - Metrics server [metrics-server]
 - HTTP/HTTPS stress tester [siege] - testing utility
 
+Install metrics-server
+
+Download components.yaml and edit start settings because of self-singed certs and vagrant vm's.
+
+```sh
+$ wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.7/components.yaml
+```
+
+Edit components.yaml
+
+```sh
+# Look for the container config arguents and add --kubelet-preferred-address-types and --kubelet-insecure-tls
+$ vi components.yaml
+ containers:
+      - name: metrics-server
+        image: k8s.gcr.io/metrics-server/metrics-server:v0.3.7
+        imagePullPolicy: IfNotPresent
+        args:
+          - --cert-dir=/tmp
+          - --secure-port=4443
+          - --kubelet-preferred-address-types=InternalIP
+          - --kubelet-insecure-tls
+```
+
+Start the metric server
+
+```sh
+$  kubectl apply -f components.yaml
+
+$  kubectl top nodes
+NAME        CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+master-k8   113m         5%     1141Mi          65%
+node-k81    72m          7%     687Mi           77%
+node-k82    66m          6%     648Mi           72%
+node-k83    65m          6%     642Mi           72%
+
+$  kubectl top pods
+NAME              CPU(cores)   MEMORY(bytes)
+etcd-0            15m          40Mi
+etcd-1            13m          26Mi
+etcd-2            12m          28Mi
+mysql-0           12m          224Mi
+mysql-1           15m          224Mi
+mysql-2           15m          243Mi
+wordpress-7nhqq   1m           41Mi
+```
+
 [vagrantfile]: https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8
 [playbook]: https://github.com/tixsalvador/ansible_vagrant
 [flannel yaml]: https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml
