@@ -12,6 +12,18 @@ spec:
   selector:
     app: wordpress   
 ---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: wordpress-hpa
+spec:
+  scaleTargetRef:
+    kind: ReplicaSet
+    name: wordpress
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 20
+---
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
