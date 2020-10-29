@@ -19,7 +19,7 @@ metadata:
 spec:
   scaleTargetRef:
     kind: ReplicaSet
-    app: wordpress
+    name: wordpress
   minReplicas: 1
   maxReplicas: 5
   targetCPUUtilizationPercentage: 20
