@@ -429,6 +429,39 @@ mysql-2           15m          243Mi
 wordpress-7nhqq   1m           41Mi
 ```
 
+Option 1: Edit [wp_wordpress.yml] and add autoscaling block
+
+```sh
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: wordpress-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: ReplicaSet
+    name: wordpress
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 20
+---
+```
+
+Option 2: Using kubeadm
+
+```sh
+$  kubectl autoscale rs wordpress --min=1 --max=5 --cpu-percent 20
+```
+
+Output should look like
+
+```sh
+$  kubectl get hpa
+NAME            REFERENCE              TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+wordpress-hpa   ReplicaSet/wordpress   1%/20%    1         5         1          6m13s
+```
+
 [vagrantfile]: https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8
 [playbook]: https://github.com/tixsalvador/ansible_vagrant
 [flannel yaml]: https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml
