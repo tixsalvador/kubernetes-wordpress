@@ -18,6 +18,7 @@ metadata:
   name: wordpress-hpa
 spec:
   scaleTargetRef:
+    apiVersion: extensions/v1beta1
     kind: ReplicaSet
     name: wordpress
   minReplicas: 1
