@@ -393,7 +393,7 @@ $ wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.
 Edit components.yaml
 
 ```sh
-# Look for the container config arguents and add --kubelet-preferred-address-types and --kubelet-insecure-tls
+# Look for the container config arguments and add the ff strings "--kubelet-preferred-address-types" and "--kubelet-insecure-tls"
 $ vi components.yaml
  containers:
       - name: metrics-server
