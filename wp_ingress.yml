@@ -10,7 +10,7 @@ spec:
       http:
         paths:
         - path: /
-          patqhType: Prefix
+          pathType: Prefix
           backend:
             service:
               name : wordpress
