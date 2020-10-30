@@ -11,5 +11,7 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: wordpress
-              servicePort: 80
+              service:
+                name : wordpress
+                port: 
+                  number: 80
