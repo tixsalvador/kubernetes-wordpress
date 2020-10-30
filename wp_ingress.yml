@@ -9,9 +9,10 @@ spec:
     - host: wordpress.salvador.org
       http:
         paths:
-          - path: /
-            backend:
-              service:
-                name : wordpress
-                port: 
-                  number: 80
+        - path: /
+          patqhType: Prefix
+          backend:
+            service:
+              name : wordpress
+              port: 
+                number: 80
