@@ -474,10 +474,10 @@ $  sudo make install
 $  siege -c 15 -t 3m -d 2 http://10.10.10.10:30317
 ```
 
--c 15 Number of concurrent users.
--t 3m Testing duration (s,m, or h)
--d 2 random delay count
-<domain>:<nodeport>
+"-c 15 Number of concurrent users."
+"-t 3m Testing duration (s,m, or h)"
+"-d 2 random delay count"
+"<domain>:<nodeport>"
 
 On the kube cluster watch the status.
 
