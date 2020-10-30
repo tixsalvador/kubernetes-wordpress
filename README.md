@@ -462,6 +462,29 @@ NAME            REFERENCE              TARGETS   MINPODS   MAXPODS   REPLICAS   
 wordpress-hpa   ReplicaSet/wordpress   1%/20%    1         5         1          6m13s
 ```
 
+Install [siege] for testing on another VM
+
+```sh
+$  wget http://download.joedog.org/siege/siege-3.1.4.tar.gz
+$  tar zxvf siege-3.1.4.tar.gz
+$  cd siege-3.1.4/
+$  ./configure
+$  make
+$  sudo make install
+$  siege -c 15 -t 3m -d 2 http://10.10.10.10:30317
+```
+
+-c 15 Number of concurrent users.
+-t 3m Testing duration (s,m, or h)
+-d 2 random delay count
+<domain>:<nodeport>
+
+On the kube cluster watch the status.
+
+```sh
+$  watch -n2 'kubectl get all'
+```
+
 [vagrantfile]: https://github.com/tixsalvador/vagrant_docker/blob/master/Vagrantfile.k8
 [playbook]: https://github.com/tixsalvador/ansible_vagrant
 [flannel yaml]: https://github.com/tixsalvador/ansible_vagrant/blob/master/files/kube-flannel.yml
