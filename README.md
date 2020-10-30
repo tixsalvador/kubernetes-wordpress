@@ -429,6 +429,37 @@ mysql-2           15m          243Mi
 wordpress-7nhqq   1m           41Mi
 ```
 
+Add container resources limits.
+Edit [wp_wordpress.yml] add resources limits on container block spec.
+
+```sh
+spec:
+      containers:
+      - name: wordpress
+        image: wordpress
+        ports:
+        - containerPort: 80
+          name: wordpress
+        volumeMounts:
+        - name: content
+          mountPath: /var/www/html
+        env:
+          - name: WORDPRESS_DB_USER
+            value: wordpress
+          - name: WORDPRESS_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wordpress-secret
+                key: db_wordpress_password
+          - name: WORDPRESS_DB_HOST
+            value: mysql
+        resources:
+          limits:
+            cpu: "100m"
+          requests:
+            cpu: "100m"
+```
+
 Option 1: Edit [wp_wordpress.yml] and add autoscaling block
 
 ```sh
