@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: wordpress
 spec:
-  type: NodePort
+  type: ClusterIP
   ports: 
     - port: 80 
       protocol: TCP
