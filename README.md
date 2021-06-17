@@ -94,7 +94,7 @@ type: NodePort
 Get token
 
 ```sh
-$ kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-system -o name | grep namespace) | grep token:
+$ kubectl -n kube-system describe $(kubectl -n kube-system get secret -o name | grep namespace) | grep token:
 ```
 
 Connect to dashboard UI
